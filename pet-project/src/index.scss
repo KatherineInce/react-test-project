@@ -4,19 +4,44 @@
     box-sizing: border-box;
 }
 
+$borderColor: #dedede;
+$titleColor: orange;
+$backgroundColor: rgb(255, 214, 139);
+$heightContent: calc(100vh - 80px);
+$heightNav:  60px;
+$cardColor: white;
+$marginCard: 10px 0 10px 0;
+
 .header-nav{
-    height: 60px;
-    border-bottom: 1px solid #dedede;
+    height: $heightNav;
+    border-bottom: 1px solid $borderColor;
     h1{
         margin: 20px 0 0 20px;
         font-family: Arial, Helvetica, sans-serif;
-        color: orange;
+        color: $titleColor;
     }  
 }
 
 .main-content{
     padding: 20px;
-    background-color: rgb(255, 214, 139);
-    min-height: calc(100vh - 80px); //80px (the height of header-nav and top padding of main-content
+    background-color: $backgroundColor;
+    min-height: $heightContent; //80px (the height of header-nav and top padding of main-content
+}
+
+.card-pet{
+    background-color: $cardColor;
+    border-radius: 8px;
+    margin: $marginCard;
+    .card-pet__image{
+        padding: 10px;
+        img{
+            height: 100%;
+            width: 100%;
+        }
+    }
+}
+
+.card-pet:hover{
+    box-shadow: 4px 4px 2px $borderColor; 
 }
   

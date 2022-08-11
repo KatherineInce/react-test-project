@@ -23,21 +23,20 @@ export const ContextProvider = ({children}) => {
     storePets = []
   }
   const [pets, setPets] = useState(storePets)
-  const [searchValue, setSearchValue] = useState('')
   const [waiting,setWaiting] = useState({
     loading: false,
     message: ''
   })
-  const setPetsDS = async () =>{
+  const setPetsDS = async () =>{ //function that set the data source
     try {
       setWaiting({
         ...waiting,
         loading: true
-      })
+      }) // set loading to true because is fetching data
       let response = await fetch('https://dog.ceo/api/breeds/list/all')
       let dogs = await response.json()
       let petsFormated = await Promise.all(Object.keys(dogs.message).filter(dog => dogs.message[dog].length > 0).map(async dog =>{
-          let imageResponse = await fetch('https://dog.ceo/api/breeds/image/random')
+          let imageResponse = await fetch(`https://dog.ceo/api/breed/${dog}/images/random`)
           let randomImage = await imageResponse.json()
           return (
             {
@@ -52,17 +51,16 @@ export const ContextProvider = ({children}) => {
               'image': randomImage.message
             })
       }))
-      //console.log(petsFormated)
-      setPets(petsFormated)
+      setPets(petsFormated) //set data source to state
       setWaiting({
         message: petsFormated.length > 0 ? '' : 'Data not found',
         loading: false
-      })
+      }) // set Loading to false because fetching finish
     } catch (error) {
       setWaiting({
         loading: false,
         message: 'Ups! Something failed'
-      })
+      }) //set a message in case fetching failed
     }
     
   }
@@ -71,17 +69,15 @@ export const ContextProvider = ({children}) => {
     { 
        setPetsDS()
     }
-    console.log(pets)
-    localStorage.setItem('pets',JSON.stringify(pets))
+    //console.log(pets)
+    localStorage.setItem('pets',JSON.stringify(pets)) //save in local storage 
   }, [pets])
   
   return (
     <ContextAPI.Provider 
       value={
         {pets,
-        setPets,
-        searchValue,
-        setSearchValue}
+        setPets}
       }>
         {children}
     </ContextAPI.Provider>
