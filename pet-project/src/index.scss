@@ -1,0 +1,22 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+
+.header-nav{
+    height: 60px;
+    border-bottom: 1px solid #dedede;
+    h1{
+        margin: 20px 0 0 20px;
+        font-family: Arial, Helvetica, sans-serif;
+        color: orange;
+    }  
+}
+
+.main-content{
+    padding: 20px;
+    background-color: rgb(255, 214, 139);
+    min-height: calc(100vh - 80px); //80px (the height of header-nav and top padding of main-content
+}
+  
