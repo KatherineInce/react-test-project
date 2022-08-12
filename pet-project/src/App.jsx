@@ -7,11 +7,11 @@ import ListDetail from './components/detail-components/ListDetail'
 import NotFound from './components/NotFound'
 
 function App() {
-  
+  //Main Path of the Project contain the header and the routes 
   return (
     <>
       <Header/>
-      <Routes>
+      <Routes> 
         <Route exact path="/" element={<ContextProvider><List /></ContextProvider>}/>
         <Route exact path="/details/:id" element={<ContextProvider><ListDetail /></ContextProvider>}/>
         <Route exact path="*" element={<NotFound />}/>       

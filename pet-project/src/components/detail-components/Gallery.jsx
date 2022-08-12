@@ -1,15 +1,22 @@
+//Component for select a new image
 import {useEffect,useState} from 'react'
 import Image from '../assets/Image'
 const Gallery = ({data,setData}) => {
-  const[imageGallery,setImageGallery] = useState([])
+  const [currentBreed,setCurrentBreed] = useState(data.breed) //save the original breed to verify if change for update the image
+  const[imageGallery,setImageGallery] = useState([]) //state with the random images
   const getRandomImages = async () => {
     let response = await fetch(`https://dog.ceo/api/breed/${data.breed}/images/random/3`)
     let images = await response.json()
     setImageGallery(images.message)
+    if(currentBreed != data.breed)
+    {  
+      console.log(currentBreed, data.breed)
+      setCurrentBreed('')
+      setData(current => ({ ...current, image: '' }))
+    }
   }
   useEffect(() => {
     getRandomImages()
-    console.log(imageGallery)
   }, [data.breed])
   
   return (
@@ -19,7 +26,7 @@ const Gallery = ({data,setData}) => {
           {imageGallery.map((image,index)=>
             <div key={index} className={`carousel-item ${index == 0 ? 'active' : null}`}>
               <Image src={image} className="d-block w-100" alt={data.breed}/>
-              <div className="carousel-caption d-none d-md-block">
+              <div className="carousel-caption d-block">
                 { image == data.image ?
                   <h5>Selected Image</h5>
                   :

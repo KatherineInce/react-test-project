@@ -1,8 +1,9 @@
-import React from 'react'
-
+import CardNotFound from './assets/CardNotFound'
 const NotFound = () => {
   return (
-    <div className='main-content'>NotFound</div>
+    <div className='main-content'>
+        <CardNotFound/>
+    </div>
   )
 }
 

@@ -1,5 +1,4 @@
-import React from 'react'
-
+//textarea with label
 const TextareaGroup = ({disableInput,data,name,label}) => {
     return (
       <>

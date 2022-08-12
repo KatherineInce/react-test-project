@@ -9,8 +9,8 @@ import {useNavigate} from 'react-router-dom'
 
 const FormList = ({pet,disableInput}) => {
   let navigate = useNavigate()
-  const {id,name,description,breed,subBreed} = pet
-  const RedirectDetail = id => navigate(`/details/${id}`)
+  const {id,name,description,breed,subBreed} = pet 
+  const RedirectDetail = id => navigate(`/details/${id}`) //function for the info button to show details
 
   
   return (

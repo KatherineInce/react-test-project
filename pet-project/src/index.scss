@@ -12,6 +12,7 @@ $heightNav:  60px;
 $cardColor: white;
 $marginCard: 10px 0 10px 0;
 $tooltipColor: #f4f4f4;
+$notFoundColor: rgb(198, 0, 0);
 .header-nav{
     height: $heightNav;
     border-bottom: 1px solid $borderColor;
@@ -60,7 +61,7 @@ $tooltipColor: #f4f4f4;
 }
  
 .pet-form{
-    padding: 10px 30px 0 0;
+    padding: 10px 20px 0 20px;
     .form-pet__button{
         display: flex;
         justify-content: end;
@@ -100,3 +101,51 @@ $tooltipColor: #f4f4f4;
 
     }
 }
+
+.not-found{
+    display: flex;
+    margin-top: 100px;
+    justify-content: center;
+    .not-found__message{
+        font-size: 50px;
+        font-weight: 600;
+        color: $notFoundColor;
+    }
+}
+
+@media only screen and (max-width: 700px) and (min-width:320px){
+    .not-found{
+        .not-found__message{
+            font-size: 40px;
+        }
+    }
+}
+
+//Spinner from https://tobiasahlin.com/spinkit/
+.spinner {
+    width: 80px;
+    height: 80px;
+    background-color: rgb(255, 255, 255);
+    margin: 200px auto;
+    -webkit-animation: sk-rotateplane 1.2s infinite ease-in-out;
+    animation: sk-rotateplane 1.2s infinite ease-in-out;
+  }
+  
+  @-webkit-keyframes sk-rotateplane {
+    0% { -webkit-transform: perspective(120px) }
+    50% { -webkit-transform: perspective(120px) rotateY(180deg) }
+    100% { -webkit-transform: perspective(120px) rotateY(180deg)  rotateX(180deg) }
+  }
+  
+  @keyframes sk-rotateplane {
+    0% { 
+      transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+      -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg) 
+    } 50% { 
+      transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+      -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg) 
+    } 100% { 
+      transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+      -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+    }
+  }

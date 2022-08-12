@@ -1,4 +1,4 @@
-
+//A label and a input 
 const InputGroup = ({disableInput,data,name,label}) => {
   return (
     <>

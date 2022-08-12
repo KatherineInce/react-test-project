@@ -1,15 +1,23 @@
+//Main Filter Component 
 import Card from './Card'
-import Search from './Search'
+import Search from '../assets/Search'
+import Loading from '../assets/Loading'
+import CardNotFound from '../assets/CardNotFound'
+import Notification from '../assets/Notifications'
+
 import {useContextAPI} from '../../context/ContextProvider'
 
 import {useState,useEffect} from 'react'
-import {debounce, filter} from 'lodash'
+import {debounce} from 'lodash'
 
 const List = () => {
-  const {pets,waiting} = useContextAPI()
-  const [search, setSearch] = useState('')
-  const [filterData, setFilterData] = useState(pets)
+  const {pets,waiting} = useContextAPI() // use two states of the context
+  //local states
+  const[loading,setLoading] = useState(true) //wait until the data of the list is loaded
+  const [search, setSearch] = useState('')  //use for query data of the data source
+  const [filterData, setFilterData] = useState(pets) //filtered data by breed and subbreed
   useEffect(() => {
+    setLoading(true)
     switch (search.length) {
       case 0:
         setFilterData(pets)
@@ -19,12 +27,17 @@ const List = () => {
         setFilterData(filterBreed)
         break;
     }
-  }, [search,pets])
+    setLoading(false)
+
+  }, [search,pets]) //When the search field or the data source change the filterDataChange
   
   return (
     <div className='main-content'>
     {waiting.loading ?
-      <div>loading</div>
+      <Loading/>
+    :
+    waiting.message.length > 0 ?
+      <Notification message={waiting.message}/>
     :
     <>
     <div className='row'>
@@ -42,10 +55,11 @@ const List = () => {
               <Card pet={pet}/>
             </div>
         </div>
-      )
-      :
-      <div>Not Found</div>
-      }
+        )
+        :
+        !loading &&
+        <CardNotFound/>
+        }
     </>
     }
     </div>

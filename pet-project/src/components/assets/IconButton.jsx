@@ -1,4 +1,4 @@
-
+//Icon Button with tooltip for more information about the button
 const IconButton = (props) => {
 
   return (
