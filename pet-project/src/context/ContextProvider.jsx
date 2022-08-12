@@ -22,7 +22,14 @@ export const ContextProvider = ({children}) => {
   if(!storePets){
     storePets = []
   }
+
+  let storeBreeds = JSON.parse(localStorage.getItem('breeds'))
+  if(!storeBreeds){
+    storeBreeds = []
+  }
+
   const [pets, setPets] = useState(storePets)
+  const [breeds, setBreeds] = useState(storeBreeds)
   const [waiting,setWaiting] = useState({
     loading: false,
     message: ''
@@ -35,6 +42,7 @@ export const ContextProvider = ({children}) => {
       }) // set loading to true because is fetching data
       let response = await fetch('https://dog.ceo/api/breeds/list/all')
       let dogs = await response.json()
+      let breedsFormated = Object.keys(dogs.message).map(dog => dog)
       let petsFormated = await Promise.all(Object.keys(dogs.message).filter(dog => dogs.message[dog].length > 0).map(async dog =>{
           let imageResponse = await fetch(`https://dog.ceo/api/breed/${dog}/images/random`)
           let randomImage = await imageResponse.json()
@@ -52,6 +60,9 @@ export const ContextProvider = ({children}) => {
             })
       }))
       setPets(petsFormated) //set data source to state
+      setBreeds(breedsFormated) //set all breeds in a state just one time
+      localStorage.setItem('breeds',JSON.stringify(breedsFormated)) //save breeds in local storage 
+
       setWaiting({
         message: petsFormated.length > 0 ? '' : 'Data not found',
         loading: false
@@ -64,6 +75,7 @@ export const ContextProvider = ({children}) => {
     }
     
   }
+
   useEffect(() => {
     if(pets.length <= 0)
     { 
@@ -77,7 +89,10 @@ export const ContextProvider = ({children}) => {
     <ContextAPI.Provider 
       value={
         {pets,
-        setPets}
+        breeds,
+        waiting,
+        setPets
+        }
       }>
         {children}
     </ContextAPI.Provider>

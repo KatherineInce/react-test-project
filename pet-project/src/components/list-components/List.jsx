@@ -6,7 +6,7 @@ import {useState,useEffect} from 'react'
 import {debounce, filter} from 'lodash'
 
 const List = () => {
-  const {pets} = useContextAPI()
+  const {pets,waiting} = useContextAPI()
   const [search, setSearch] = useState('')
   const [filterData, setFilterData] = useState(pets)
   useEffect(() => {
@@ -15,23 +15,19 @@ const List = () => {
         setFilterData(pets)
         break;
       default:
-        console.log('filtrando...')
-        let filterBreed = pets.filter(pet => pet.breed.includes(search))
-        if(filterBreed.length > 0)
-        {
-          setFilterData(filterBreed)
-        }
-        else{
-          filterBreed = pets.filter(pet => pet.subBreed.includes(search))
-          setFilterData(filterBreed)
-        }
+        let filterBreed = pets.filter(pet => (pet.breed.toLowerCase()).includes(search.toLowerCase()) || (pet.subBreed.toLowerCase()).includes(search.toLowerCase()))
+        setFilterData(filterBreed)
         break;
     }
-  }, [search])
+  }, [search,pets])
   
   return (
     <div className='main-content'>
-      <div className='row'>
+    {waiting.loading ?
+      <div>loading</div>
+    :
+    <>
+    <div className='row'>
         <div className='col-8 col-md-5 col-lg-4'>
           <Search placeholder='Search...' 
           onChange={debounce(
@@ -50,7 +46,8 @@ const List = () => {
       :
       <div>Not Found</div>
       }
-      
+    </>
+    }
     </div>
   )
 }
